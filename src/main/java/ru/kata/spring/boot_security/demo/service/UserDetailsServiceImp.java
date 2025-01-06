@@ -12,7 +12,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.Optional;
 
-
 @Service
 @Transactional(readOnly = true)
 public class UserDetailsServiceImp implements UserDetailsService {
@@ -23,7 +22,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
     public UserDetailsServiceImp(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

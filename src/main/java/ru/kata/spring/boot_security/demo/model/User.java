@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,13 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-
 
 @Entity
 @Table(name = "users")
@@ -31,7 +27,7 @@ public class User implements UserDetails {
     private String surname;
 
     @Column(name = "age")
-    private int age;
+    private Long age;
 
     @Column(name = "email", unique = true)
     @NotBlank(message = "поле не должно быть пустым!")
@@ -41,7 +37,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -50,13 +46,21 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String surname, int age, String email, String password, Set<Role> roles) {
+    public User(String name, String surname, Long age, String email, String password, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.email = email;
         this.password = password;
         this.roles = roles;
+    }
+
+    public User(String admin, String admin1, Long age, String email, String password) {
+        this.name = admin;
+        this.surname = admin1;
+        this.age = age;
+        this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -83,11 +87,11 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public int getAge() {
+    public Long getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Long age) {
         this.age = age;
     }
 
@@ -99,7 +103,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
@@ -108,7 +111,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
@@ -151,20 +154,21 @@ public class User implements UserDetails {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return age == user.age && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(age, user.age) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, age, email, password);
+        return Objects.hash(id, name, surname, age, email, password);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
