@@ -47,7 +47,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(User user, Set<Role> roles) {
+        public void updateUser(User user, Set<Role> roles) {
         User updateUser = userDao.findById(user.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         updateUser.setName(user.getName());
