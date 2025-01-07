@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String surname;
 
     @Column(name = "age")
-    private Long age;
+    private int age;
 
     @Column(name = "email", unique = true)
     @NotBlank(message = "поле не должно быть пустым!")
@@ -46,7 +46,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String surname, Long age, String email, String password, Set<Role> roles) {
+    public User(String name, String surname, int age, String email, String password, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -55,13 +55,14 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(String admin, String admin1, Long age, String email, String password) {
-        this.name = admin;
-        this.surname = admin1;
+    public User(String name, String surname, int age, String email, String password) {
+        this.name = name;
+        this.surname = surname;
         this.age = age;
         this.email = email;
         this.password = password;
     }
+
 
     public Long getId() {
         return id;
@@ -87,11 +88,11 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public Long getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Long age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -154,14 +155,26 @@ public class User implements UserDetails {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(age, user.age) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
+        return age == user.age &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, age, email, password);
+        int result = 17;
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + Integer.hashCode(age);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
     }
 
     @Override

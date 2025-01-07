@@ -9,6 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface UserDao extends JpaRepository<User, Long> {
+
     @Query("Select u from User u left join fetch u.roles where u.email=:email")
     Optional<User> findByEmail(String email);
+
+    @Query("SELECT COUNT(u) > 0 FROM User u WHERE u.email = :email")
+    boolean existsByEmail(String email);
+
 }

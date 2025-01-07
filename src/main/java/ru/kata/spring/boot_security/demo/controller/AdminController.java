@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -13,7 +12,6 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.validation.PersonValidator;
 
-import javax.validation.Valid;
 import java.util.Set;
 
 @Controller
@@ -42,19 +40,20 @@ public class AdminController {
 
     @PostMapping("/new")
     public String createUser(@ModelAttribute User user, @RequestParam("role") Set<Role> roles) {
-        userService.saveUser(userService.createUser(user, roles));
+        userService.saveUser(user, roles);
         return "redirect:/admin";
     }
 
     @PostMapping(value = "/edit")
-    public String update(@ModelAttribute("user") User user, @RequestParam("id") long id, @RequestParam(value = "role", required = false) Set<Role> roles) {
-        userService.update(id, userService.updateUser(user, roles, id));
+    public String editUser(@ModelAttribute User user, @RequestParam("role") Set<Role> roles) {
+        userService.updateUser(user, roles);
         return "redirect:/admin/";
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute User user) {
-        userService.deleteUser(user.getId());
+    public String deleteUser(@RequestParam("id") Long id) {
+        userService.deleteUser(id);
         return "redirect:/admin";
     }
 }
+
