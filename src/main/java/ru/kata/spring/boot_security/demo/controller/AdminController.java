@@ -20,13 +20,11 @@ public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
-    private final PersonValidator personValidator;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService, PersonValidator personValidator) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.personValidator = personValidator;
     }
 
     @GetMapping
