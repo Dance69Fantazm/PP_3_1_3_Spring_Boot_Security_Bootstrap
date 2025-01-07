@@ -146,12 +146,9 @@
                                                                    placeholder="Enter email">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="password"
-                                                                   class="form-label text-center fw-bold d-block">Password</label>
-                                                            <input type="password" th:value="${user.getPassword()}"
-                                                                   th:name="password"
-                                                                   class="form-control form-control-sm"
-                                                                   placeholder="Enter password">
+                                                            <label for="password" class="form-label text-center fw-bold d-block">Password</label>
+                                                            <input type="password" th:name="password" class="form-control form-control-sm"
+                                                                   placeholder="Enter new password (оставить пустым, если пароль не изменился)">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="roles"

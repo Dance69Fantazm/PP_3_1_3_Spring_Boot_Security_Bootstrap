@@ -54,9 +54,10 @@ public class UserServiceImp implements UserService {
         updateUser.setSurname(user.getSurname());
         updateUser.setEmail(user.getEmail());
         updateUser.setAge(user.getAge());
-        if (user.getPassword() != null && !user.getPassword().isEmpty() &&
-                !passwordEncoder.matches(user.getPassword(), updateUser.getPassword())) {
-            updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            if (!passwordEncoder.matches(user.getPassword(), updateUser.getPassword())) {
+                updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
         }
         if (roles != null && !roles.isEmpty()) {
             updateUser.setRoles(roles);
