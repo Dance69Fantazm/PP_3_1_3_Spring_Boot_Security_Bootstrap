@@ -87,7 +87,8 @@
                                             <span th:text="${#strings.substring(role.role,5)} + ' '"></span>
                                         </span>
                                     </td>
-                                    <!-- Edit-->
+
+                                    <!---------------------------- Modal Edit User ------------------------------->
                                     <td>
                                         <a class="btn btn-info text-white" data-toggle="modal"
                                            th:attr="data-target=${'#editModal' + user.id}">Edit</a>
@@ -175,7 +176,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Delete-->
+
+                                    <!---------------------------- Modal Delete User ------------------------------->
                                     <td>
                                         <a data-toggle="modal" th:attr="data-target=${'#deleteModal' + user.id}"
                                            class="btn btn-danger text-white">Delete</a>
@@ -261,7 +263,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- Это переход на вкладку Add new user -->
+
+                        <!--------------------- Это переход на вкладку Add new user --------------------->
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="d-flex justify-content-center">
                                 <div class="container-fluid px-0">
@@ -306,14 +309,16 @@
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
-                                                        <label for="password" class="form-label fw-bold mb-0">Password</label>
+                                                        <label for="password"
+                                                               class="form-label fw-bold mb-0">Password</label>
                                                         <input type="password" class="form-control" id="password"
                                                                placeholder="Password" th:name="password">
                                                     </div>
                                                     <br>
                                                     <div class="form-group">
                                                         <label for="roles">Roles:</label>
-                                                        <select id="roles" name="roles" multiple="multiple" th:name="role"
+                                                        <select id="roles" name="roles" multiple="multiple"
+                                                                th:name="role"
                                                                 class="form-control">
                                                             <option th:each="role : ${allRoles}" th:value="${role.id}"
                                                                     th:text="${#strings.substring(role.role, 5)}"></option>
@@ -334,7 +339,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- Это вкладка ЮЗЕР с навигации -->
+
+                <!-------------------------- Это вкладка ЮЗЕР с навигации -------------------------->
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <div class="tab-content">
                         <h1>User information-page</h1>

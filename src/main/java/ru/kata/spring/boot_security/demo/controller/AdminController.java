@@ -46,10 +46,10 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/edit")
-    public String update(@ModelAttribute @Valid User user) {
-        userService.updateUser(user);
-        return "redirect:/admin";
+    @PostMapping(value = "/edit")
+    public String update(@ModelAttribute("user") User user, @RequestParam("id") long id, @RequestParam(value = "role", required = false) Set<Role> roles) {
+        userService.update(id, userService.updateUser(user, roles, id));
+        return "redirect:/admin/";
     }
 
     @PostMapping("/delete")
